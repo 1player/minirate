@@ -85,7 +85,7 @@ defmodule Minirate.CounterTest do
       limit = 10
       fake_future_time = fake_now + 1_000
 
-      assert {:block, :limit_exceeded} ==
+      assert {:block, 16} ==
                Counter.check_limit(:rate_limiter, {"test", 1, limit, fake_future_time})
     end
 
@@ -121,7 +121,7 @@ defmodule Minirate.CounterTest do
       limit = 20
       fake_future_time = fake_now + 1_000
 
-      assert {:block, :limit_exceeded} ==
+      assert {:block, 21} ==
                Counter.check_limit(:rate_limiter, {"test", 1, limit, fake_future_time}, increment)
     end
 

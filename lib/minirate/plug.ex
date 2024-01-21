@@ -37,7 +37,7 @@ defmodule Minirate.Plug do
     case Minirate.check_limit(action, ip, limit) do
       {:allow, _} -> conn
       {:skip, _} -> conn
-      {:block, :limit_exceeded} -> block_request(conn)
+      {:block, _} -> block_request(conn)
     end
   end
 

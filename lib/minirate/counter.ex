@@ -10,11 +10,13 @@ defmodule Minirate.Counter do
   end
 
   def check_limit(table, {action, id, limit, now}, increment) do
-    with {:ok, count} <- get_count(table, {action, id, now}, increment),
-         true <- count <= limit do
-      {:allow, count}
+    with {:ok, count} <- get_count(table, {action, id, now}, increment) do
+      if count <= limit do
+        {:allow, count}
+      else
+        {:block, count}
+      end
     else
-      false -> {:block, :limit_exceeded}
       {:error, reason} -> {:skip, reason}
       _ -> {:skip, :something_failed}
     end
